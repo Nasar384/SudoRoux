@@ -1,4 +1,54 @@
-﻿@{
+﻿@model Web.Models.SubscriberDTO
+@{
     ViewData["Title"] = "Home Page";
+
 }
 
+<br />
+<form asp-controller="Home" asp-action="Index" method="post">
+    <div class="form-group">
+        <label asp-for="FirstName"></label>
+        <input asp-for="FirstName" autocomplete="off" class="form-control" />
+        <span asp-validation-for="FirstName" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="LastName"></label>
+        <input asp-for="LastName" autocomplete="off" class="form-control" />
+        <span asp-validation-for="LastName" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="EmailAddress"></label>
+        <input asp-for="EmailAddress" autocomplete="off" class="form-control" />
+        <span asp-validation-for="EmailAddress" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="DateOfBirth"></label>
+        <input asp-for="DateOfBirth" autocomplete="off" class="form-control" />
+        <span asp-validation-for="DateOfBirth" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Subscribed"></label>
+        <input asp-for="Subscribed" autocomplete="off" class="form-control" />
+    </div>
+    <div class="row">
+        <div class="col-lg-offset-4 col-lg-8">
+            <button type="submit" class="btn btn-primary">Save</button>
+        </div>
+    </div>
+
+</form>
+@if (ViewData["Error"] != null)
+{
+    <div class="text-danger">
+        <p><strong>Error:</strong> @ViewData["Error"].ToString()</p>
+    </div>
+}
+@if (ViewData["Success"] != null)
+{
+    <div class="text-success">
+        <p><strong>Success:</strong> @ViewData["Success"].ToString()</p>
+    </div>
+}
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}

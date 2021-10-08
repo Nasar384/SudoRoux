@@ -7,6 +7,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Web.BLL.Configurations;
+using Web.BLL.Interfaces.Models;
+using Web.BLL.Interfaces.Services;
+using Web.BLL.Services;
+using Web.Models;
 
 namespace Web
 {
@@ -23,6 +28,9 @@ namespace Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.Configure<ApiConfig>(Configuration.GetSection("ApiConfig"));
+            services.AddScoped<ISubscriptionService, SubscriptionService>();
+            services.AddScoped<ISubscriberModel, SubscriberDTO>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -35,7 +43,10 @@ namespace Web
             else
             {
                 app.UseExceptionHandler("/Home/Error");
+                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+                app.UseHsts();
             }
+            app.UseHttpsRedirection();
             app.UseStaticFiles();
 
             app.UseRouting();
